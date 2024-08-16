@@ -30,20 +30,20 @@ viewAgentsWorkHistory() // -> a list of issue which agents worked on
 ### Example:
 
 ```
-createIssue("T1", "Payment Related", "Payment Failed", "My payment failed but money is debited", “testUser1@test.com”);
+createIssue("T1", "Payment Related", "Payment Failed", "My payment failed but money is debited", "testUser1@test.com");
 >>> Issue I1 created against transaction "T1"
 
-createIssue("T2", "Mutual Fund Related", "Purchase Failed", "Unable to purchase Mutual Fund", “testUser2@test.com”);
+createIssue("T2", "Mutual Fund Related", "Purchase Failed", "Unable to purchase Mutual Fund", "testUser2@test.com");
 >>> Issue I2 created against transaction "T2"
 
-createIssue("T3", "Payment Related", "Payment Failed", "My payment failed but money is debited", , “testUser2@test.com”);
+createIssue("T3", "Payment Related", "Payment Failed", "My payment failed but money is debited", "testUser2@test.com");
 >>> Issue I3 created against transaction "T3"
 
 
-addAgent(“agent1@test.com”, “Agent 1”, Arrays.asList("Payment Related", "Gold Related"));
+addAgent("agent1@test.com", "Agent 1", Arrays.asList("Payment Related", "Gold Related"));
 >>> Agent A1 created
 
-addAgent(“agent2@test.com”, “Agent 2”, Arrays.asList("Payment Related"));
+addAgent("agent2@test.com", "Agent 2", Arrays.asList("Payment Related"));
 >>> Agent A2 created
 
 
