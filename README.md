@@ -69,6 +69,7 @@ getIssue({"type": "Payment Related"});
 updateIssue("I3", "In Progress", "Waiting for payment confirmation");
 >>> I3 status updated to In Progress
 
+
 resolveIssue("I3", "PaymentFailed debited amount will get reversed");
 >>> I3 issue marked resolved
 

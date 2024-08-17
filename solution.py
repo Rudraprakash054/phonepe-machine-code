@@ -1,5 +1,7 @@
-from typing import List
+from typing import List, Dict
 from helper import IssueStatusType
+
+import random
 
 class Issue:
     # Class attributes
@@ -33,6 +35,49 @@ class Issue:
         '''
         Assign a customer issue to agent
         '''
+        for agent in Agent._agents.values():
+            if not agent._active_issue():
+                agent.issues.append(Issue._issues[issue_id])
+                print(f'Issue {issue_id} assigned to Agent {agent.agent_id}')
+                return
+        
+        random_agent = random.choice(list(Agent._agents.values()))
+        random_agent.issues.append(Issue._issues[issue_id])
+        print(f'Issue {issue_id} added to waitlist of Agent {random_agent.agent_id}')
+
+    @staticmethod
+    def getIssue(filter_param: Dict[str, str]) -> None:
+        '''
+        Fetch issues based on the filter parameters
+        '''
+        if filter_param:
+            for issue in Issue._issues.values():
+                if filter_param.get('email') and filter_param['email'] == issue.email:
+                    print(issue.__dict__)
+                elif filter_param.get('type') and filter_param['type'] == issue.issue_type:
+                    print(issue.__dict__)
+
+    @staticmethod
+    def updateIssue(issue_id: str, status: str, resolution: str) -> None:
+        '''
+        Update the status of an issue
+        '''
+        issue = Issue._issues.get(issue_id)
+        if issue:
+            issue.status = status
+            issue.resolution = resolution
+            print(f'{issue.issue_id} status updated to {issue.status}')
+
+    @staticmethod
+    def resolveIssue(issue_id: str, resolution: str) -> None:
+        '''
+        Resolve an issue
+        '''
+        issue = Issue._issues.get(issue_id)
+        if issue:
+            issue.status = IssueStatusType.CLOSED
+            issue.resolution = resolution
+            print(f'{issue.issue_id} issue marked resolved')
 
 
 class Agent:
@@ -59,8 +104,20 @@ class Agent:
             print(f'Agent {agent.agent_id} created')
             Agent._agents[agent.agent_id] = agent
 
-    def _issue_assigned(self) -> bool:
+    def _active_issue(self) -> bool:
         '''
-        Check whether the issue is assigned to an agent or not
+        Check whether the issue is open or in-progress state
         '''
-        pass
+        for issue in self.issues:
+            if issue.status in [IssueStatusType.OPEN, IssueStatusType.INPROGRESS]:
+                return True
+        return False
+    
+    @staticmethod
+    def viewAgentsWorkHistory() -> None:
+        '''
+        Get the work history details of agents
+        '''
+        for agent in Agent._agents.values():
+            issue_ids = [issue.issue_id for issue in agent.issues]
+            print(f'{agent.agent_id} -> {issue_ids}')
