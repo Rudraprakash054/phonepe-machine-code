@@ -27,7 +27,14 @@ class Issue:
         if issue:
             print(f'Issue {issue.issue_id} created against transaction {issue.transaction_id}')
             Issue._issues[issue.issue_id] = issue
-            
+    
+    @staticmethod 
+    def assignIssue(issue_id: str) -> None:
+        '''
+        Assign a customer issue to agent
+        '''
+
+
 class Agent:
     # Class attributes
     _agents = {}
@@ -51,3 +58,9 @@ class Agent:
         if agent:
             print(f'Agent {agent.agent_id} created')
             Agent._agents[agent.agent_id] = agent
+
+    def _issue_assigned(self) -> bool:
+        '''
+        Check whether the issue is assigned to an agent or not
+        '''
+        pass
